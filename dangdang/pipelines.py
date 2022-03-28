@@ -9,13 +9,16 @@ from itemadapter import ItemAdapter
 from pymongo import MongoClient
 import json
 
+# MongoDB地址
+mongo_address = '127.0.0.1'
+
 
 # 保存到MongoDB数据库
 class DangdangPipeline:
     def open_spider(self, spider):
         if spider.name == "book":
             # 建立和MongoDB的链接
-            self.client = MongoClient('127.0.0.1', 27017)
+            self.client = MongoClient(mongo_address, 27017)
             # 指定链接库
             self.db = self.client['dangdang']
             # 指定库集合

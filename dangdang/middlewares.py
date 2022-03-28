@@ -17,7 +17,7 @@ from itemadapter import is_item, ItemAdapter
 class SeleniumMiddleware(object):
 
     def process_request(self, request, spider):
-        if spider.name == "book":
+        if spider.name == "book" or spider.name == "redis_book":
             url = request.url
             if '-24hours-' in url:
                 # 设置Edge无头浏览器模式
@@ -46,7 +46,7 @@ class SeleniumMiddleware(object):
 class ChangeMeMiddleware(object):
 
     def process_request(self, request, spider):
-        if spider.name == "book":
+        if spider.name == "book" or spider.name == "redis_book":
             user_agent_list = [
                 "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
                 "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50",
@@ -91,8 +91,11 @@ class ChangeMeMiddleware(object):
 
             proxys = [
                 {
-                    'ip_address': 'ip地址',
-                }
+                    'ip_address': 'ip地址', 'user_passwd': 'user:passwd'
+                },
+                {
+                    'ip_address': 'ip地址'
+                },
             ]
             # 设置IP代理
             proxy = random.choice(proxys)

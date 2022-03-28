@@ -1,11 +1,19 @@
 import scrapy
 from ..items import DangdangItem
+from scrapy_redis.spiders import RedisSpider
 
 
-class BookSpider(scrapy.Spider):
+# Redis分布式爬虫
+class BookSpider(RedisSpider):
     name = 'book'
-    allowed_domains = ['dangdang.com']
-    start_urls = ['http://bang.dangdang.com/books/bestsellers/']
+    # allowed_domains = ['dangdang.com']
+    # start_urls = ['http://bang.dangdang.com/books/bestsellers/']
+    redis_key = 'admin'
+
+    def __init__(self, *args, **kwargs):
+        domain = kwargs.pop('domain', '')
+        self.allowed_domains = list(filter(None, domain.split(',')))
+        super(BookSpider, self).__init__(*args, **kwargs)
 
     def parse(self, response):
         # 获取大标题的节点列表

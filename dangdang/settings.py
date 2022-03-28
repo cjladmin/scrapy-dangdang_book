@@ -20,13 +20,19 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 # DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 # SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 # SCHEDULER_PERSIST = True
-# REDIS_URL = 'redis://IP:6379'
+# REDIS_URL = 'redis://IP:6379'  # 将IP改为自己Redis数据库的地址
 
 # 设置爬取间隔(s)
 # DOWNLOAD_DELAY = 1
 
+# 管道配置
+ITEM_PIPELINES = {
+   'dangdang.pipelines.DangdangPipeline': 301,
+   'dangdang.pipelines.IpPoolPipelines': 300,
+   # 当开启该管道，数据将会被存储到Redis数据库中
+   # 'scrapy_redis.pipelines.RedisPipeline': 400,
+}
 
-# Obey robots.txt rules
 # ROBOTSTXT_OBEY = True
 
 DOWNLOADER_MIDDLEWARES = {
@@ -34,11 +40,3 @@ DOWNLOADER_MIDDLEWARES = {
    'dangdang.middlewares.SeleniumMiddleware': 543,
    'dangdang.middlewares.ChangeMeMiddleware': 542,
 }
-
-# Configure item pipelines
-# See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'dangdang.pipelines.DangdangPipeline': 301,
-   'dangdang.pipelines.IpPoolPipelines': 300,
-}
-
