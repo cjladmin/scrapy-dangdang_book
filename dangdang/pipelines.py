@@ -30,7 +30,7 @@ class DangdangPipeline:
             # 展示数据
             print(data)
             # 写入数据
-            self.col.insert(data)
+            self.col.insert_one(data)
             return item
 
     def close_spider(self, spider):
